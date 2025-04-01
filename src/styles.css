@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  background: linear-gradient(
+    to right bottom,
+    #5c2dd1 0%,
+    #3a0ca3 30%,
+    #7209b7 70%,
+    #4361ee 100%
+  );
+  background-attachment: fixed;
+  margin: 0;
+  height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  margin-left: 200px; /* Ширина навбара */
+  transition: margin 0.3s ease;
+}
+
+.vertical-navbar.collapsed + .content {
+  margin-left: 50px;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-left: 0;
+  }
+
+  body.nav-open {
+    overflow: hidden;
+  }
+
+  body.nav-open::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+  }
+}

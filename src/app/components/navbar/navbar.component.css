@@ -1,0 +1,53 @@
+body {
+  background: linear-gradient(
+    to right bottom,
+    #5c2dd1 0%,
+    #3a0ca3 30%,
+    #7209b7 70%,
+    #4361ee 100%
+  );
+  background-attachment: fixed;
+  height: 100%;
+}
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.vertical-navbar {
+  width: 200px;
+  background-color: #2c3e50;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.vertical-navbar a {
+  color: white;
+  padding: 10px;
+  margin: 5px 0;
+  text-decoration: none;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-navbar a:hover {
+  background-color: rgb(9, 40, 22);
+}
+
+.vertical-navbar a.active {
+  background-color: rgb(9, 40, 22);
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
