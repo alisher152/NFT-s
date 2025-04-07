@@ -7,7 +7,7 @@ import { Component, HostListener } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
-  title = 'ALisher';
+  title = 'Alisher';
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const navbar = document.querySelector('.vertical-navbar');

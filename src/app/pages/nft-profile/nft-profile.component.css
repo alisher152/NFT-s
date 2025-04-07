@@ -1,0 +1,242 @@
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --success-color: #4cc9f0;
+  --danger-color: #f72585;
+  --light-color: #f8f9fa;
+  --dark-color: #212529;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+
+.action-buttons-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Регулирует расстояние между кнопками */
+  width: 100%; /* Растягивает кнопки по ширине */
+  align-items: center;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 320px;
+  margin: 2rem auto;
+  transition: var(--transition);
+}
+
+.profile-container:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.profile-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e9ecef;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+  border-color: var(--primary-color);
+}
+
+.profile-info {
+  text-align: center;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.profile-info h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+.profile-info p {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+/* Кнопки */
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.75rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.button {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  min-width: 120px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.button-primary {
+  color: white;
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+.button-primary:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+.button-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: 2px solid #6c757d;
+}
+
+.button-secondary:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+.button-danger {
+  background-color: #6c757d;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.button-danger:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+.button-success {
+  background-color: var(--success-color);
+  color: var(--dark-color: #212529);
+  border: 2px solid var(--success-color);
+}
+
+.button-success:hover {
+  background-color: #3aa8d8;
+  border-color: #3aa8d8;
+}
+
+/* Форма редактирования */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+  margin-top: 1rem;
+  animation: slideUp 0.4s ease;
+}
+
+.form-group {
+  width: 100%;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--dark-color);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.char-counter {
+  font-size: 0.75rem;
+  color: #6c757d;
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+.file-name {
+  font-size: 0.875rem;
+  color: #6c757d;
+  text-align: center;
+  margin-top: 0.5rem;
+  word-break: break-word;
+}
+
+.file-input {
+  display: none;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+  }
+}

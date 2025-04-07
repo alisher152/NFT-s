@@ -6,11 +6,13 @@ import { NFTComponent } from './pages/nft/nft.component';
 import { NftProfileComponent } from './pages/nft-profile/nft-profile.component';
 import { MyNftsComponent } from './pages/my-nfts/my-nfts.component';
 import { CreateNftComponent } from './pages/create-nft/create-nft.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/nft', pathMatch: 'full' }, // Исправлено: перенаправление на /nft
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'nft', component: NFTComponent },
   { path: 'profile', component: NftProfileComponent },
   { path: 'my-nfts', component: MyNftsComponent },

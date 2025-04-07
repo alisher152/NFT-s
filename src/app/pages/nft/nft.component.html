@@ -1,1 +1,42 @@
-<p>nft works!</p>
+<div class="nft-container">
+  <h1>NFT's</h1>
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="searchText" placeholder="Search NFTs..." />
+    <button (click)="searchNFTs()">Search</button>
+  </div>
+
+  <div class="nft-grid">
+    <div *ngFor="let nft of filteredNFTs" class="nft-card">
+      <h2>{{ nft.title }}</h2>
+      <p>{{ nft.subtitle }}</p>
+
+      <div class="category-line">
+        <p class="category">{{ nft.category }}</p>
+        <p class="category-type">{{ nft.category }}</p>
+      </div>
+
+      <p class="price">${{ nft.price }}</p>
+
+      <div class="actions">
+        <button (click)="voteNFT(nft)" class="vote-btn">
+          👍 {{ nft.votes }}
+        </button>
+        <button (click)="toggleCommentBox(nft)" class="comment-btn">
+          💬 Comment
+        </button>
+        <button (click)="buyNFT(nft)" class="buy-btn">Buy</button>
+      </div>
+
+      <div *ngIf="nft.showComments" class="comments">
+        <p *ngFor="let comment of nft.comments">{{ comment }}</p>
+        <input
+          type="text"
+          [(ngModel)]="nft.newComment"
+          placeholder="Add a comment"
+          class="comment-input"
+        />
+        <button (click)="addComment(nft)">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

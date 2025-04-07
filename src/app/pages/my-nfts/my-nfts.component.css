@@ -1,0 +1,130 @@
+/* Общий стиль контейнера */
+.nft-details,
+.collection,
+.more-collections {
+  background: linear-gradient(to right, #0f0f1a, #1a1a2e);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #ddd;
+}
+
+/* Кнопки */
+button {
+  background: green;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  background: linear-gradient(135deg, rgb(126, 235, 119), rgb(30, 185, 92));
+  transform: scale(1.05);
+}
+
+/* Дизайн NFT деталей */
+.nft-details img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.nft-details h1 {
+  font-size: 24px;
+  color: #f4f4f4;
+}
+
+.nft-details h2 {
+  font-size: 24px;
+  color: #f4f4f4;
+}
+
+.nft-details p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #ccc;
+}
+
+.description {
+  font-size: 24px;
+}
+
+/* Комментарии */
+.nft-comments {
+  margin-top: 20px;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.comment img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.comment .username {
+  font-weight: bold;
+  color: #4a90e2;
+}
+
+.comment p {
+  margin: 0;
+  color: #ccc;
+}
+
+/* Коллекция */
+.collection {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.collection-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  transition: 0.3s;
+  width: 200px;
+}
+
+.collection-item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.collection-item h3 {
+  font-size: 18px;
+  color: #f4f4f4;
+}
+
+.collection-item p {
+  color: #bbb;
+  font-size: 14px;
+}
+
+.collection-item button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Грид для дополнительной коллекции */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}

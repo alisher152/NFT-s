@@ -25,8 +25,8 @@ export class NavbarComponent implements OnInit {
 
   private checkViewport() {
     this.isMobileView = window.innerWidth <= 768;
-    if (!this.isMobileView) {
-      this.isMenuOpen = true; // Всегда открыт на десктопе
+    if (this.isMobileView) {
+      this.isMenuOpen = false; // Закрываем меню на мобильных
     }
   }
 }

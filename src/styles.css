@@ -1,14 +1,32 @@
 body {
-  background: linear-gradient(
-    to right bottom,
-    #5c2dd1 0%,
-    #3a0ca3 30%,
-    #7209b7 70%,
-    #4361ee 100%
-  );
-  background-attachment: fixed;
+  background-color: black;
+  background-image: url('/src/assets/Ellipse 34.svg'), url('/src/assets/Ellipse 35.svg'), url('/src/assets/Ellipse 36.svg')
+  background-position: 15% 0%, 105% 50%, 15% 400%;
+  background-size: 40vw, 50vw, 45vw;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  height: 200vh;
+  width: 100%;
   margin: 0;
-  height: 100vh;
+
+  /* Исправление возможных артефактов */
+  background-blend-mode: normal;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  width: 100%;
+  height: 200vh;
+  background: radial-gradient(
+      circle at 15% 10%,
+      rgba(0, 170, 255, 0.3),
+      transparent 50%
+    ),
+    radial-gradient(circle at 75% 50%, rgba(170, 0, 255, 0.3), transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(0, 255, 170, 0.3), transparent 50%);
+  pointer-events: none; /* Чтобы не мешало кликам */
+  z-index: -1;
 }
 
 .app-container {
@@ -19,7 +37,7 @@ body {
 .content {
   flex: 1;
   padding: 20px;
-  margin-left: 200px; /* Ширина навбара */
+  margin-left: 200px;
   transition: margin 0.3s ease;
 }
 

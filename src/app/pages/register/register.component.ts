@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'], // Используем те же стили, что и для login
+  styleUrls: ['./register.component.css'],
   standalone: false,
 })
 export class RegisterComponent {
@@ -25,14 +25,13 @@ export class RegisterComponent {
       return;
     }
 
-    // Здесь будет логика регистрации
-    this.message = 'Registration successful!';
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-    }, 1500);
-  }
+    // Сохраняем данные пользователя в localStorage (имитация бэкенда)
+    localStorage.setItem('user', JSON.stringify(this.user));
 
-  navigateToLogin() {
-    this.router.navigate(['/login']);
+    this.message = 'Registration successful!';
+
+    setTimeout(() => {
+      this.router.navigate(['/dashboard']); // Перенаправляем в Dashboard
+    }, 1500);
   }
 }

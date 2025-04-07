@@ -1,1 +1,45 @@
-<p>my-nfts works!</p>
+<!-- Кнопка переключения -->
+<button (click)="toggleDetails()">
+  {{ showDetails ? "Hide NFT Details" : "Show NFT Details" }}
+</button>
+
+<!-- Детали NFT -->
+<div *ngIf="showDetails" class="nft-container">
+  <!-- Изображение -->
+  <div class="nft-image">
+    <img [src]="nft.imageUrl" alt="NFT Image" />
+  </div>
+
+  <!-- Весь текст справа -->
+  <div class="nft-info">
+    <div class="nft-header">
+      <h1>{{ nft.title }}</h1>
+    </div>
+
+    <h3>Comments</h3>
+    <ul class="comments-list">
+      <li *ngFor="let comment of nft.comments">
+        <img [src]="comment.avatar" alt="Avatar" />
+        <strong>{{ comment.username }}</strong
+        >: {{ comment.text }}
+      </li>
+    </ul>
+
+    <h2>More by {{ nft.creator }}</h2>
+    <p class="author-info">Дополнительный текст про автора...</p>
+  </div>
+</div>
+
+<!-- Дополнительные NFT -->
+<div class="more-collections">
+  <h2>More NFTs</h2>
+  <div class="collection-grid">
+    <div *ngFor="let item of additionalNfts" class="collection-item">
+      <img [src]="item.imageUrl" alt="NFT Image" />
+      <h3>{{ item.title }}</h3>
+      <p>Category: {{ item.category }}</p>
+      <p>Price: ${{ item.price }}</p>
+      <button>Buy</button>
+    </div>
+  </div>
+</div>

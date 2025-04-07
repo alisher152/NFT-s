@@ -1,0 +1,26 @@
+<div class="dashboard-container">
+  <h1>Welcome, {{ username }}</h1>
+
+  <div class="profile-section">
+    <div class="profile-image">
+      <img src="assets/profile-placeholder.png" alt="Profile Image" />
+    </div>
+    <p class="image-info">
+      Recommended format PNG or JPG, <br />
+      size at least 300x300 px, max size 10MB
+    </p>
+  </div>
+
+  <div class="user-info">
+    <label>Username</label>
+    <input type="text" [value]="username" disabled />
+  </div>
+
+  <div class="bio-section">
+    <label>Bio</label>
+    <textarea disabled>Short description about the user...</textarea>
+    <p class="char-count">153/300 Symbols left</p>
+  </div>
+
+  <button class="create-btn">Create!</button>
+</div>

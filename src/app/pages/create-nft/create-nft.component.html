@@ -1,1 +1,33 @@
-<p>create-nft works!</p>
+<div class="nft-create-container">
+  <h2>Create Item</h2>
+  <div class="upload-box">
+    <p>Upload File</p>
+    <input type="file" (change)="onFileSelected($event)" />
+    <p>You can upload PNG, GIF, WEBP, MP4 or MP3 files.</p>
+  </div>
+  <div class="form-group">
+    <label>Item Name</label>
+    <input type="text" [(ngModel)]="itemName" />
+  </div>
+  <div class="form-group">
+    <label>Category</label>
+    <select [(ngModel)]="category">
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Item Type</label>
+    <select [(ngModel)]="itemType">
+      <option *ngFor="let type of itemTypes" [value]="type">{{ type }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Price</label>
+    <textarea [(ngModel)]="price"></textarea>
+  </div>
+  <div class="form-group-1">
+    <label>Description</label>
+    <textarea [(ngModel)]="description"></textarea>
+  </div>
+  <button class="btn" (click)="createItem()">Create</button>
+</div>

@@ -1,0 +1,124 @@
+body {
+  background: linear-gradient(to right bottom, #0a0f1e, #0f162a);
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.nft-create-container {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 20px;
+}
+
+.nft-create-container-item {
+  width: 80%;
+  max-width: 900px;
+  background: rgba(20, 25, 40, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+.nft-create-container h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.upload-box {
+  border: 2px dashed rgba(0, 255, 255, 0.3);
+  background: rgba(15, 20, 35, 0.8);
+  padding: 40px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  width: 600px;
+  height: 400px;
+}
+
+.upload-box p {
+  font-size: 44px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 50px;
+}
+
+.form-group {
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  position: relative;
+  top: -400px;
+  left: 65%;
+  transform: translateY(-50%);
+  margin: 20px;
+  width: 400px;
+}
+
+.form-group label {
+  font-size: 44px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.form-group input,
+.form-group select {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  font-size: 24px;
+  margin: 5px;
+  appearance: none; /* Убираем стандартный стиль */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='green'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 30px; /* Чтобы текст не накладывался на стрелку */
+  color: black !important;
+}
+
+.form-group textarea {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: rgba(255, 255, 255, 0.1);
+}
+
+.form-group-1 {
+  margin-top: -580px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-1 label {
+  color: white;
+  font-size: 44px;
+}
+
+.form-group-1 textarea,
+.form-group-1 input {
+  color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  height: 400px;
+  width: 600px;
+}
+
+.btn {
+  background: #39ce9a;
+  border: none;
+  padding: 10px 90px;
+  border-radius: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: white;
+  top: -260px;
+  left: 75%;
+  position: relative;
+}
+
+.btn:hover {
+  background: #00d19c;
+}

@@ -1,4 +1,4 @@
-<nav class="vertical-navbar" [class.open]="isMenuOpen">
+<nav class="vertical-navbar" [class.closed]="!isMenuOpen">
   <!-- Бургер-кнопка -->
   <button class="burger-btn" (click)="toggleMenu()">
     <div class="burger-line" [class.open]="isMenuOpen"></div>
@@ -6,7 +6,7 @@
     <div class="burger-line" [class.open]="isMenuOpen"></div>
   </button>
 
-  <!-- Навигационные ссылки только с иконками -->
+  <!-- Навигационные ссылки -->
   <div class="nav-links">
     <a routerLink="/login" routerLinkActive="active" title="Login">
       <span class="material-icons">Login</span>
@@ -14,7 +14,7 @@
     <a routerLink="/register" routerLinkActive="active" title="Register">
       <span class="material-icons">Register</span>
     </a>
-    <a routerLink="nft" routerLinkActive="active" title="NFT">
+    <a routerLink="/nft" routerLinkActive="active" title="NFT">
       <span class="material-icons">NFT</span>
     </a>
     <a routerLink="/my-nfts" routerLinkActive="active" title="My NFT's">
@@ -24,7 +24,7 @@
       <span class="material-icons">Profile</span>
     </a>
     <a routerLink="/create-nft" routerLinkActive="active" title="Create NFT">
-      <span class="material-icons">My NFT's</span>
+      <span class="material-icons">Create NFT's</span>
     </a>
   </div>
 </nav>
