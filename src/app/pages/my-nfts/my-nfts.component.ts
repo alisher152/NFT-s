@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class MyNftsComponent {
-  showDetails = false; // По умолчанию скрыто
-
+  showDetails = false;
+  myCollection: any[] = []; // Указываем тип данных массива
   nfts = [
     {
       id: 1,
@@ -63,7 +63,18 @@ export class MyNftsComponent {
 
   nft = this.nfts[0];
 
+  userCollection: any[] = []; // Коллекция пользователя
+
   toggleDetails() {
     this.showDetails = !this.showDetails;
+  }
+
+  addToCollection(nft: any) {
+    if (!this.myCollection.some((item) => item.title === nft.title)) {
+      this.myCollection.push(nft);
+      alert(`${nft.title} добавлен в коллекцию!`);
+    } else {
+      alert(`${nft.title} уже в коллекции.`);
+    }
   }
 }

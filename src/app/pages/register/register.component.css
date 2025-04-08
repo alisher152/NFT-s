@@ -1,6 +1,5 @@
 .page-container {
   display: flex;
-  min-height: 100vh;
 }
 
 .register-content {
@@ -12,29 +11,30 @@
 }
 
 .register-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.1); /* Цвет как у карточек */
   padding: 2.5rem;
   border-radius: 15px;
   width: 100%;
   max-width: 500px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  color: #ddd; /* Белый текст */
+  backdrop-filter: blur(10px);
 }
 
-/* Остальные стили аналогичны login.component.css */
-register-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+.register-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 255, 153, 0.4);
 }
 
 .register-card h2 {
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #2d3748;
+  color: #fff;
   font-size: 2rem;
   font-weight: 600;
 }
 
-/* Стили для формы */
+/* Поля формы */
 .form-group {
   margin-bottom: 1.75rem;
   position: relative;
@@ -43,7 +43,7 @@ register-card:hover {
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #4a5568;
+  color: #bbb;
   font-weight: 500;
   transition: all 0.3s ease;
 }
@@ -51,25 +51,26 @@ register-card:hover {
 .form-group input {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #444;
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background-color: #f8fafc;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 .form-group input:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+  border-color: #00cc77;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.4);
   outline: none;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Стили для кнопок */
+/* Кнопки */
 .form-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 2.5remrem;
+  margin-top: 2.5rem;
   gap: 1rem;
 }
 
@@ -88,50 +89,37 @@ button {
 }
 
 button[type="submit"] {
-  background-color: #667eea;
+  background-color: #00cc77;
   color: white;
-  box-shadow: 0 4px 6px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 6px rgba(74, 144, 226, 0.3);
 }
 
 button[type="submit"]:hover {
-  background-color: #5a67d8;
+  background-color: #00cc77;
   transform: translateY(-2px);
-  box-shadow: 0 6px 8px rgba(102, 126, 234, 0.4);
-}
-
-button[type="submit"]:active {
-  transform: translateY(0);
+  box-shadow: 0 6px 8px rgba(74, 144, 226, 0.4);
 }
 
 button[type="submit"]:disabled {
-  background-color: #cbd5e0;
+  background-color: #00cc77;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-.register-btn {
-  background-color: #edf2f7;
-  color: #4a5568;
-}
-
-.register-btn:hover {
-  background-color: #e2e8f0;
-  transform: translateY(-2px);
-}
-
-/* Сообщения */
-.message {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  border-radius: 8px;
+.login-link {
   text-align: center;
-  background-color: #ebf8ff;
-  color: #3182ce;
-  animation: fadeIn 0.5s ease;
+  display: block;
+  color: #00cc77;
+  text-decoration: none;
+  font-weight: 500;
 }
 
-/* Анимации */
+.login-link:hover {
+  text-decoration: underline;
+}
+
+/* Анимация */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -140,26 +128,5 @@ button[type="submit"]:disabled {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Эффекты при фокусе */
-.form-group input:focus + label {
-  color: #667eea;
-  transform: translateY(-5px);
-}
-
-/* Адаптивность */
-@media (max-width: 480px) {
-  .login-card {
-    padding: 1.5rem;
-  }
-
-  .form-actions {
-    flex-direction: column;
-  }
-
-  button {
-    width: 100%;
   }
 }

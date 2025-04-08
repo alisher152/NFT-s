@@ -167,6 +167,8 @@
   color: white;
   outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin: 5px;
+  margin-left: 0px;
 }
 
 .comment-input::placeholder {
@@ -176,4 +178,38 @@
 .comment-input:focus {
   border-color: #00cc77;
   box-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
+}
+
+.submit-btn {
+  background: none;
+  border: 1px solid #00ff99;
+  color: #00ff99;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+.collect-btn {
+  background: none;
+  border: 1px solid #ffcc00;
+  color: #ffcc00;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+.collect-btn:hover {
+  background: #ffcc00;
+  color: #111827;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
 }

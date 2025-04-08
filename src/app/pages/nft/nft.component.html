@@ -1,7 +1,12 @@
 <div class="nft-container">
   <h1>NFT's</h1>
   <div class="search-bar">
-    <input type="text" [(ngModel)]="searchText" placeholder="Search NFTs..." />
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      (input)="searchNFTs()"
+      placeholder="Search NFTs..."
+    />
     <button (click)="searchNFTs()">Search</button>
   </div>
 
@@ -25,6 +30,9 @@
           💬 Comment
         </button>
         <button (click)="buyNFT(nft)" class="buy-btn">Buy</button>
+        <button (click)="addToCollection(nft)" class="collect-btn">
+          ➕ Add to Collection
+        </button>
       </div>
 
       <div *ngIf="nft.showComments" class="comments">
@@ -35,7 +43,7 @@
           placeholder="Add a comment"
           class="comment-input"
         />
-        <button (click)="addComment(nft)">Submit</button>
+        <button (click)="addComment(nft)" class="submit-btn">Submit</button>
       </div>
     </div>
   </div>

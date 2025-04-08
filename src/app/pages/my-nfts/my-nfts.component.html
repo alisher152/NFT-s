@@ -1,5 +1,5 @@
 <!-- Кнопка переключения -->
-<button (click)="toggleDetails()">
+<button (click)="toggleDetails()" class="button-info">
   {{ showDetails ? "Hide NFT Details" : "Show NFT Details" }}
 </button>
 
@@ -26,20 +26,41 @@
     </ul>
 
     <h2>More by {{ nft.creator }}</h2>
-    <p class="author-info">Дополнительный текст про автора...</p>
+    <h3>NFT Description</h3>
+    <p class="author-info">
+      Li Europan lingues es membres del sam familie. Lor separat existentie es
+      un myth.<br />
+      Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li
+      lingues differe <br />
+      solmen in li grammatica, li pronunciation e li plu commun vocabules.
+      Omnicos <br />
+      directe al desirabilite de un nov lingua franca: On refusa continuar payar
+      custosi <br />
+      traductores.At solmen va esser necessi far uniform grammatica,
+      pronunciation e <br />
+      plu sommun paroles. Ma quande lingues coalesce, li grammatica del
+      resultant <br />
+      lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov
+      lingua franca <br />
+      va esser plu simplic e regulari quam li existent Europan lingues. It va
+      esser tam <br />
+      simplic quam Occidental in fact, it va esser Occidental.
+    </p>
   </div>
 </div>
 
 <!-- Дополнительные NFT -->
 <div class="more-collections">
-  <h2>More NFTs</h2>
-  <div class="collection-grid">
-    <div *ngFor="let item of additionalNfts" class="collection-item">
-      <img [src]="item.imageUrl" alt="NFT Image" />
-      <h3>{{ item.title }}</h3>
-      <p>Category: {{ item.category }}</p>
-      <p>Price: ${{ item.price }}</p>
-      <button>Buy</button>
+  <div class="user-collection">
+    <h2>Your Collection</h2>
+    <div *ngIf="userCollection.length === 0">No NFTs added yet.</div>
+    <div class="collection-grid">
+      <div *ngFor="let item of userCollection" class="collection-item">
+        <img [src]="item.imageUrl" alt="NFT Image" />
+        <h3>{{ item.title }}</h3>
+        <p>Category: {{ item.category }}</p>
+        <p>Price: ${{ item.price }}</p>
+      </div>
     </div>
   </div>
 </div>
