@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NftCollectionService } from '../../nft-collection.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-my-nfts',
@@ -6,9 +9,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./my-nfts.component.css'],
   standalone: false,
 })
-export class MyNftsComponent {
+export class MyNftsComponent implements OnInit {
   showDetails = false;
-  myCollection: any[] = []; // Указываем тип данных массива
+  selectedNft: any = null; // Добавлено для хранения выбранного NFT
+  myCollection: any[] = [];
+
   nfts = [
     {
       id: 1,
@@ -34,47 +39,50 @@ export class MyNftsComponent {
     },
   ];
 
-  additionalNfts = [
-    {
-      title: 'Collection of nightmares',
-      category: 'Games',
-      price: 49.99,
-      imageUrl: 'assets/nft1.jpg',
-    },
-    {
-      title: 'Apes',
-      category: 'Collectibles',
-      price: 49.99,
-      imageUrl: 'assets/nft2.jpg',
-    },
-    {
-      title: 'GALLERY_13',
-      category: 'Games',
-      price: 49.99,
-      imageUrl: 'assets/nft3.jpg',
-    },
-    {
-      title: 'USSR',
-      category: 'Collectibles',
-      price: 49.99,
-      imageUrl: 'assets/nft4.jpg',
-    },
-  ];
+  constructor(private nftCollectionService: NftCollectionService) {}
 
-  nft = this.nfts[0];
+  ngOnInit() {
+    this.myCollection = this.nftCollectionService.getCollection();
+  }
 
-  userCollection: any[] = []; // Коллекция пользователя
-
-  toggleDetails() {
+  toggleDetails(nft: any) {
+    this.selectedNft = nft;
     this.showDetails = !this.showDetails;
   }
 
   addToCollection(nft: any) {
-    if (!this.myCollection.some((item) => item.title === nft.title)) {
-      this.myCollection.push(nft);
-      alert(`${nft.title} добавлен в коллекцию!`);
-    } else {
-      alert(`${nft.title} уже в коллекции.`);
+    this.nftCollectionService.addToCollection(nft);
+    this.myCollection = this.nftCollectionService.getCollection();
+    alert(`${nft.title} добавлен в коллекцию!`);
+  }
+
+  removeFromCollection(nft: any) {
+    this.nftCollectionService.removeFromCollection(nft);
+    this.myCollection = this.nftCollectionService.getCollection();
+    alert(`${nft.title} удалён из коллекции!`);
+  }
+
+  voteNFT(nft: any) {
+    nft.likes++;
+    alert(`Вы поставили лайк на "${nft.title}"!`);
+  }
+
+  toggleCommentBox(nft: any) {
+    nft.showComments = !nft.showComments;
+  }
+
+  buyNFT(nft: any) {
+    alert(`Вы купили "${nft.title}" за $${nft.price}!`);
+  }
+
+  addComment(nft: any) {
+    if (nft.newComment && nft.newComment.trim()) {
+      if (!nft.comments) {
+        nft.comments = [];
+      }
+      nft.comments.push(nft.newComment.trim());
+      nft.newComment = '';
+      alert(`Комментарий добавлен для "${nft.title}"!`);
     }
   }
 }

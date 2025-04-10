@@ -1,9 +1,9 @@
 <div class="dashboard-container">
-  <h1>Welcome, {{ username }}</h1>
+  <h1>Create Profile</h1>
 
   <div class="profile-section">
     <div class="profile-image">
-      <img src="assets/profile-placeholder.png" alt="Profile Image" />
+      <img src="assets/default-avatar.jpg" alt="Profile Image" />
     </div>
     <p class="image-info">
       Recommended format PNG or JPG, <br />
@@ -13,14 +13,23 @@
 
   <div class="user-info">
     <label>Username</label>
-    <input type="text" [value]="username" disabled />
+    <input
+      type="text"
+      [(ngModel)]="username"
+      placeholder="Enter Your Username"
+    />
   </div>
 
   <div class="bio-section">
     <label>Bio</label>
-    <textarea disabled>Short description about the user...</textarea>
-    <p class="char-count">153/300 Symbols left</p>
+    <textarea
+      [(ngModel)]="bio"
+      rows="4"
+      (input)="checkCharLimit($event)"
+      placeholder="Tell us about yourself..."
+    ></textarea>
+    <p class="char-count">{{ bio.length }}/300 Symbols left</p>
   </div>
 
-  <button class="create-btn">Create!</button>
+  <button class="create-btn" (click)="saveProfile()">Create!</button>
 </div>

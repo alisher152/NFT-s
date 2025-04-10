@@ -41,9 +41,11 @@
         </div>
 
         <div class="form-actions">
-          <button type="submit" [disabled]="!registerForm.valid">
-            Sign Up
-          </button>
+          <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+            <!-- Поля формы -->
+            <button type="submit">Sign Up</button>
+          </form>
+
           <a routerLink="/login" class="login-link"
             >Already have an account? <br />
             Sign In</a

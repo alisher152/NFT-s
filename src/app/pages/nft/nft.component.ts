@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NftCollectionService } from '../../nft-collection.service';
 
 @Component({
   selector: 'app-nft',
@@ -9,7 +10,6 @@ import { Component } from '@angular/core';
 export class NFTComponent {
   searchText: string = '';
   filteredNFTs: any[] = [];
-  myCollection: any[] = []; // Коллекция пользователя
 
   nfts = [
     {
@@ -57,15 +57,15 @@ export class NFTComponent {
       image: 'assets/nft4.jpg',
     },
     {
-      title: 'USSR',
-      subtitle: 'USSR 2.Edition 07',
-      category: 'Collectibles',
+      title: 'Collection of nightmares',
+      subtitle: 'Nightmare (pt.15) 10☓10',
+      category: 'Games',
       price: 49.99,
       votes: 0,
       comments: [],
       showComments: false,
       newComment: '',
-      image: 'assets/nft4.jpg',
+      image: 'assets/nft1.jpg',
     },
     {
       title: 'Apes',
@@ -79,17 +79,6 @@ export class NFTComponent {
       image: 'assets/nft2.jpg',
     },
     {
-      title: 'Collection of nightmares',
-      subtitle: 'Nightmare (pt.15) 10☓10',
-      category: 'Games',
-      price: 49.99,
-      votes: 0,
-      comments: [],
-      showComments: false,
-      newComment: '',
-      image: 'assets/nft1.jpg',
-    },
-    {
       title: 'GALLERY_13',
       subtitle: 'HorseNFT #1332',
       category: 'Games',
@@ -100,16 +89,31 @@ export class NFTComponent {
       newComment: '',
       image: 'assets/nft3.jpg',
     },
+    {
+      title: 'USSR',
+      subtitle: 'USSR 2.Edition 07',
+      category: 'Collectibles',
+      price: 49.99,
+      votes: 0,
+      comments: [],
+      showComments: false,
+      newComment: '',
+      image: 'assets/nft4.jpg',
+    },
   ];
 
-  constructor() {
+  constructor(
+    private nftCollectionService: NftCollectionService // Подключение сервиса
+  ) {
     this.filteredNFTs = [...this.nfts]; // Копируем изначальные NFT
   }
 
   searchNFTs() {
+    console.log('Поисковый запрос:', this.searchText);
     this.filteredNFTs = this.nfts.filter((nft) =>
       nft.title.toLowerCase().includes(this.searchText.toLowerCase())
     );
+    console.log('Отфильтрованные NFT:', this.filteredNFTs);
   }
 
   voteNFT(nft: any) {
@@ -137,11 +141,8 @@ export class NFTComponent {
   }
 
   addToCollection(nft: any) {
-    if (!this.myCollection.includes(nft)) {
-      this.myCollection.push(nft);
-      console.log('NFT добавлен в коллекцию:', nft);
-    } else {
-      console.log('Этот NFT уже в коллекции.');
-    }
+    // Используем метод сервиса вместо локальной переменной
+    this.nftCollectionService.addToCollection(nft);
+    alert(`${nft.title} добавлен в коллекцию!`);
   }
 }

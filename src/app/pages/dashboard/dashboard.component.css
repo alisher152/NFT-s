@@ -1,35 +1,30 @@
-body {
-  background: linear-gradient(
-    to right bottom,
-    #5c2dd1 0%,
-    #3a0ca3 30%,
-    #7209b7 70%,
-    #4361ee 100%
-  );
-  background-attachment: fixed;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .dashboard-container {
-  background: rgba(0, 0, 0, 0.7);
+  background: transparent;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
   width: 400px;
+  max-width: 90%; /* Адаптивность */
+  margin: 0 auto;
   color: white;
 }
 
 h1 {
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 54px;
+  margin-bottom: 40px;
 }
 
 .profile-section {
-  text-align: center;
-  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start; /* Элементы будут выровнены сверху */
+  gap: 10px; /* Расстояние между текстом и кругом */
+  margin-bottom: 30px;
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column; /* Текст и изображение в одной колонке */
+  align-items: flex-start; /* Текст выравнивается слева */
 }
 
 .profile-image {
@@ -41,7 +36,6 @@ h1 {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  margin: 0 auto;
 }
 
 .profile-image img {
@@ -50,9 +44,12 @@ h1 {
   object-fit: cover;
 }
 
+.profile-info {
+  margin-bottom: 5px; /* Отступ от изображения */
+}
+
 .image-info {
   font-size: 12px;
-  margin-top: 10px;
   color: #ccc;
 }
 
@@ -76,6 +73,14 @@ textarea {
   border: none;
   border-radius: 5px;
   color: white;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border: 1px solid #00cc77;
+  box-shadow: 0 0 5px rgba(0, 255, 153, 0.5);
 }
 
 textarea {
@@ -84,8 +89,9 @@ textarea {
 
 .char-count {
   font-size: 12px;
-  color: #888;
+  color: #ccc;
   text-align: right;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Улучшенный вид */
 }
 
 .create-btn {
@@ -97,8 +103,21 @@ textarea {
   color: black;
   font-weight: bold;
   cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
 }
 
 .create-btn:hover {
   background-color: #00cc77;
+  box-shadow: 0 4px 10px rgba(0, 255, 153, 0.4); /* Тень при наведении */
+}
+
+.create-btn:focus {
+  outline: none; /* Убираем стандартное выделение */
+  background-color: #00cc77;
+  box-shadow: 0 0 15px rgba(0, 255, 153, 0.6); /* Более яркая подсветка при фокусе */
+}
+
+.create-btn:active {
+  transform: scale(0.98);
+  background-color: #00b366;
 }
