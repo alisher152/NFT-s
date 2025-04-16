@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NftCollectionService } from '../../nft-collection.service';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-nft',
@@ -103,9 +104,10 @@ export class NFTComponent {
   ];
 
   constructor(
-    private nftCollectionService: NftCollectionService // Подключение сервиса
+    private nftCollectionService: NftCollectionService,
+    private userService: UserService
   ) {
-    this.filteredNFTs = [...this.nfts]; // Копируем изначальные NFT
+    this.filteredNFTs = [...this.nfts];
   }
 
   searchNFTs() {
@@ -141,8 +143,12 @@ export class NFTComponent {
   }
 
   addToCollection(nft: any) {
-    // Используем метод сервиса вместо локальной переменной
-    this.nftCollectionService.addToCollection(nft);
+    const currentUser = this.userService.getUser();
+    if (!currentUser) {
+      alert('Пожалуйста, войдите в систему!');
+      return;
+    }
+    this.nftCollectionService.addToCollection(currentUser.id, nft);
     alert(`${nft.title} добавлен в коллекцию!`);
   }
 }

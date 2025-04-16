@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NftCollectionService } from '../../nft-collection.service';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-my-nfts',
@@ -11,8 +10,12 @@ import { FormsModule } from '@angular/forms';
 })
 export class MyNftsComponent implements OnInit {
   showDetails = false;
-  selectedNft: any = null; // Добавлено для хранения выбранного NFT
+  selectedNft: any = null;
+  selectedCreator: any = null;
+  moreByCreator: any[] = [];
+
   myCollection: any[] = [];
+  currentUser: { id: string; name: string } | null = null;
 
   nfts = [
     {
@@ -30,35 +33,79 @@ export class MyNftsComponent implements OnInit {
           text: 'This is a beautiful NFT!!!',
           avatar: 'assets/avatar1.jpg',
         },
-        {
-          username: 'MorygaNFT',
-          text: 'I think so too',
-          avatar: 'assets/avatar2.jpg',
-        },
       ],
+    },
+    {
+      id: 2,
+      title: 'Electric Skull #102',
+      collection: 'Dark Vault',
+      category: 'Art',
+      creator: 'Anonymous-User-9de72',
+      price: 120,
+      imageUrl: 'assets/nft-skull.jpg',
+      likes: 45,
+      comments: [],
+    },
+    {
+      id: 3,
+      title: 'Cyber Fox',
+      collection: 'Neo Animals',
+      category: 'Animals',
+      creator: 'KKSpecial',
+      price: 180,
+      imageUrl: 'assets/nft-fox.jpg',
+      likes: 60,
+      comments: [],
     },
   ];
 
-  constructor(private nftCollectionService: NftCollectionService) {}
+  constructor(
+    private nftCollectionService: NftCollectionService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
-    this.myCollection = this.nftCollectionService.getCollection();
+    this.currentUser = this.userService.getUser();
+    if (this.currentUser) {
+      this.myCollection = this.nftCollectionService.getCollection(
+        this.currentUser.id
+      );
+    }
   }
 
   toggleDetails(nft: any) {
     this.selectedNft = nft;
     this.showDetails = !this.showDetails;
+
+    // Получаем информацию о создателе
+    this.selectedCreator = this.userService
+      .getAllUsers()
+      .find((user) => user.name === nft.creator);
+
+    // Получаем другие NFT этого создателя
+    this.moreByCreator = this.nfts.filter(
+      (item) => item.creator === nft.creator && item.id !== nft.id
+    );
   }
 
   addToCollection(nft: any) {
-    this.nftCollectionService.addToCollection(nft);
-    this.myCollection = this.nftCollectionService.getCollection();
+    if (!this.currentUser) {
+      alert('Пожалуйста, войдите в систему, чтобы добавить NFT в коллекцию!');
+      return;
+    }
+    this.nftCollectionService.addToCollection(this.currentUser.id, nft);
+    this.myCollection = this.nftCollectionService.getCollection(
+      this.currentUser.id
+    );
     alert(`${nft.title} добавлен в коллекцию!`);
   }
 
   removeFromCollection(nft: any) {
-    this.nftCollectionService.removeFromCollection(nft);
-    this.myCollection = this.nftCollectionService.getCollection();
+    if (!this.currentUser) return;
+    this.nftCollectionService.removeFromCollection(this.currentUser.id, nft);
+    this.myCollection = this.nftCollectionService.getCollection(
+      this.currentUser.id
+    );
     alert(`${nft.title} удалён из коллекции!`);
   }
 
@@ -80,9 +127,12 @@ export class MyNftsComponent implements OnInit {
       if (!nft.comments) {
         nft.comments = [];
       }
-      nft.comments.push(nft.newComment.trim());
+      nft.comments.push({
+        username: this.currentUser?.name || 'Аноним',
+        text: nft.newComment.trim(),
+        avatar: 'assets/default-avatar.jpg',
+      });
       nft.newComment = '';
-      alert(`Комментарий добавлен для "${nft.title}"!`);
     }
   }
 }
