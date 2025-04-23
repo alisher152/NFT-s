@@ -10,7 +10,7 @@ export class NftProfileComponent implements OnInit {
   defaultAvatarUrl: string = 'assets/default-avatar.jpg';
   customAvatarUrl: string | null = null;
   isEditing = false;
-  name = 'Летучий Феникс';
+  name = 'USER';
   about = '';
   selectedFileName: string | null = null;
   private usedNames: Set<string> = new Set();

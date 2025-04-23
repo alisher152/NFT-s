@@ -30,6 +30,8 @@
   max-width: 320px;
   margin: 2rem auto;
   transition: var(--transition);
+  background: transparent;
+  color: white;
 }
 
 .profile-container:hover {
@@ -96,6 +98,11 @@
   font-size: 0.9rem;
   min-width: 120px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(
+    to bottom right,
+    rgba(0, 213, 255, 0.83),
+    rgb(45, 90, 45)
+  );
 }
 
 .button:hover {
@@ -155,6 +162,12 @@
   gap: 1rem;
   margin-top: 1rem;
   animation: slideUp 0.4s ease;
+
+  background-color: rgba(255, 255, 255, 0.1); /* полупрозрачный белый */
+  backdrop-filter: blur(8px); /* размывает задний фон */
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .form-group {

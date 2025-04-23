@@ -1,6 +1,10 @@
-<nav class="vertical-navbar" [class.closed]="!isMenuOpen && isMobileView">
-  <!-- Бургер-кнопка -->
-  <button class="burger-btn" (click)="toggleMenu()" *ngIf="isMobileView">
+<nav
+  class="vertical-navbar"
+  [class.open]="isMenuOpen"
+  [class.closed]="!isMenuOpen"
+>
+  <!-- Бургер кнопка -->
+  <button class="burger-btn" (click)="toggleMenu()">
     <div class="burger-line" [class.open]="isMenuOpen"></div>
     <div class="burger-line" [class.open]="isMenuOpen"></div>
     <div class="burger-line" [class.open]="isMenuOpen"></div>
@@ -8,7 +12,6 @@
 
   <!-- Навигационные ссылки -->
   <div class="nav-links">
-    <!-- Общие разделы -->
     <a routerLink="/login" routerLinkActive="active" title="Login">
       <span class="link-text">Login</span>
     </a>
@@ -19,56 +22,29 @@
       <span class="link-text">NFT</span>
     </a>
 
-    <!-- Защищённые разделы -->
-    <a
-      *ngIf="isLoggedIn"
-      routerLink="/profile"
-      routerLinkActive="active"
-      title="Profile"
-    >
-      <span class="link-text">Profile</span>
-    </a>
-    <a
-      *ngIf="!isLoggedIn"
-      class="disabled-link"
-      (click)="handleNavigation('/profile')"
-      title="Profile"
-    >
-      <span class="link-text">Profile</span>
-    </a>
+    <!-- Защищённые ссылки -->
+    <ng-container *ngIf="isLoggedIn; else guestLinks">
+      <a routerLink="/profile" routerLinkActive="active">
+        <span class="link-text">Profile</span>
+      </a>
+      <a routerLink="/my-nfts" routerLinkActive="active">
+        <span class="link-text">My NFT's</span>
+      </a>
+      <a routerLink="/create-nft" routerLinkActive="active">
+        <span class="link-text">Create NFT</span>
+      </a>
+    </ng-container>
 
-    <a
-      *ngIf="isLoggedIn"
-      routerLink="/my-nfts"
-      routerLinkActive="active"
-      title="My NFT's"
-    >
-      <span class="link-text">My NFT's</span>
-    </a>
-    <a
-      *ngIf="!isLoggedIn"
-      class="disabled-link"
-      (click)="handleNavigation('/my-nfts')"
-      title="My NFT's"
-    >
-      <span class="link-text">My NFT's</span>
-    </a>
-
-    <a
-      *ngIf="isLoggedIn"
-      routerLink="/create-nft"
-      routerLinkActive="active"
-      title="Create NFT"
-    >
-      <span class="link-text">Create NFT</span>
-    </a>
-    <a
-      *ngIf="!isLoggedIn"
-      class="disabled-link"
-      (click)="handleNavigation('/create-nft')"
-      title="Create NFT"
-    >
-      <span class="link-text">Create NFT</span>
-    </a>
+    <ng-template #guestLinks>
+      <a class="disabled-link" (click)="handleNavigation('/profile')">
+        <span class="link-text">Profile</span>
+      </a>
+      <a class="disabled-link" (click)="handleNavigation('/my-nfts')">
+        <span class="link-text">My NFT's</span>
+      </a>
+      <a class="disabled-link" (click)="handleNavigation('/create-nft')">
+        <span class="link-text">Create NFT</span>
+      </a>
+    </ng-template>
   </div>
 </nav>
