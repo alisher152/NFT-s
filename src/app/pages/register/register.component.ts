@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-register',
@@ -8,30 +10,68 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class RegisterComponent {
-  user = {
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
+  registerForm: FormGroup;
+  errorMessage: string = '';
+  successMessage: string = '';
+  isLoading: boolean = false;
 
-  message: string = '';
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {
+    this.registerForm = this.fb.group(
+      {
+        username: ['', [Validators.required, Validators.minLength(3)]],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', Validators.required],
+      },
+      { validator: this.passwordMatchValidator }
+    );
+  }
 
-  constructor(private router: Router) {}
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('password')?.value === form.get('confirmPassword')?.value
+      ? null
+      : { mismatch: true };
+  }
 
   onSubmit() {
-    if (this.user.password !== this.user.confirmPassword) {
-      this.message = 'Passwords do not match';
-      return;
+    if (this.registerForm.invalid || this.isLoading) return;
+
+    this.isLoading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    const { username, email, password } = this.registerForm.value;
+
+    try {
+      const isRegistered = this.userService.register({
+        name: username,
+        email: email,
+        password: password, // В реальном приложении пароль должен хэшироваться
+        avatar: 'assets/default-avatar.jpg',
+        description: 'New user',
+      });
+
+      if (isRegistered) {
+        this.successMessage = 'Регистрация успешна! Перенаправляем...';
+        setTimeout(() => {
+          this.router.navigate(['/nft']);
+        }, 1500);
+      } else {
+        this.errorMessage = 'Пользователь с таким именем уже существует';
+      }
+    } catch (error) {
+      this.errorMessage = 'Ошибка при регистрации';
+      console.error(error);
+    } finally {
+      this.isLoading = false;
     }
+  }
 
-    // Сохраняем данные пользователя в localStorage (имитация бэкенда)
-    localStorage.setItem('user', JSON.stringify(this.user));
-
-    this.message = 'Registration successful!';
-
-    setTimeout(() => {
-      this.router.navigate(['/dashboard']); // Перенаправляем в Dashboard
-    }, 1500);
+  get f() {
+    return this.registerForm.controls;
   }
 }

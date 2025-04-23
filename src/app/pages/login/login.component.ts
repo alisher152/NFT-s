@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from '../../user.service';
+import { AuthService } from '../../auth service';
 
 @Component({
   selector: 'app-login',
@@ -7,21 +11,48 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class LoginComponent {
-  username: string = ''; // Добавлено свойство username
-  password: string = ''; // Добавлено свойство password
-  message: string = ''; // Добавлено свойство message
+  loginForm: FormGroup;
+  errorMessage = '';
+  isLoading = false;
 
-  // Добавлен метод onSubmit()
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+    });
+  }
+
   onSubmit() {
-    if (this.username && this.password) {
-      this.message = `Добро пожаловать, ${this.username}!`;
-    } else {
-      this.message = 'Пожалуйста, введите логин и пароль';
+    if (this.loginForm.invalid || this.isLoading) return;
+
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    const { username, password } = this.loginForm.value;
+
+    try {
+      const result = this.userService.login({ username, password });
+
+      if (result.success) {
+        this.authService.login('generated-token'); // Замените на реальный токен
+        this.router.navigate(['/nft']);
+      } else {
+        this.errorMessage = result.message || 'Invalid username or password';
+      }
+    } catch (error) {
+      this.errorMessage = 'An error occurred during login';
+      console.error('Login error:', error);
+    } finally {
+      this.isLoading = false;
     }
   }
 
-  // Добавлен метод showRegisterMessage()
-  showRegisterMessage() {
-    this.message = 'Функция регистрации будет доступна позже';
+  get f() {
+    return this.loginForm.controls;
   }
 }

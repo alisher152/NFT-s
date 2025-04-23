@@ -3,53 +3,114 @@
     <div class="register-card">
       <h2>Create Account</h2>
 
-      <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <!-- Username Field -->
         <div class="form-group">
           <label for="username">Username</label>
           <input
             type="text"
             id="username"
-            name="username"
-            [(ngModel)]="user.username"
-            required
-            #usernameInput="ngModel"
+            formControlName="username"
+            [class.invalid]="f['username'].invalid && f['username'].touched"
+            placeholder="Enter your username"
           />
+          <div
+            *ngIf="f['username'].invalid && f['username'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['username'].errors?.['required']">
+              Username is required
+            </div>
+            <div *ngIf="f['username'].errors?.['minlength']">
+              Minimum 3 characters
+            </div>
+          </div>
         </div>
 
+        <!-- Email Field -->
         <div class="form-group">
           <label for="email">Email</label>
           <input
             type="email"
             id="email"
-            name="email"
-            [(ngModel)]="user.email"
-            required
-            #emailInput="ngModel"
+            formControlName="email"
+            [class.invalid]="f['email'].invalid && f['email'].touched"
+            placeholder="Enter your email"
           />
+          <div
+            *ngIf="f['email'].invalid && f['email'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['email'].errors?.['required']">Email is required</div>
+            <div *ngIf="f['email'].errors?.['email']">
+              Please enter a valid email
+            </div>
+          </div>
         </div>
 
+        <!-- Password Field -->
         <div class="form-group">
           <label for="password">Password</label>
           <input
             type="password"
             id="password"
-            name="password"
-            [(ngModel)]="user.password"
-            required
-            #passwordInput="ngModel"
+            formControlName="password"
+            [class.invalid]="f['password'].invalid && f['password'].touched"
+            placeholder="At least 6 characters"
           />
+          <div
+            *ngIf="f['password'].invalid && f['password'].touched"
+            class="error-message"
+          >
+            <div *ngIf="f['password'].errors?.['required']">
+              Password is required
+            </div>
+            <div *ngIf="f['password'].errors?.['minlength']">
+              Minimum 6 characters
+            </div>
+          </div>
         </div>
 
-        <div class="form-actions">
-          <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
-            <!-- Поля формы -->
-            <button type="submit">Sign Up</button>
-          </form>
-
-          <a routerLink="/login" class="login-link"
-            >Already have an account? <br />
-            Sign In</a
+        <!-- Confirm Password Field -->
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            formControlName="confirmPassword"
+            [class.invalid]="registerForm.errors?.['mismatch'] && f['confirmPassword'].touched"
+            placeholder="Re-enter your password"
+          />
+          <div
+            *ngIf="registerForm.errors?.['mismatch'] && f['confirmPassword'].touched"
+            class="error-message"
           >
+            Passwords do not match
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="submit-btn"
+            [disabled]="registerForm.invalid || isLoading"
+          >
+            <span *ngIf="!isLoading">Sign Up</span>
+            <span *ngIf="isLoading" class="spinner"></span>
+          </button>
+
+          <div *ngIf="errorMessage" class="alert error">
+            {{ errorMessage }}
+          </div>
+
+          <div *ngIf="successMessage" class="alert success">
+            {{ successMessage }}
+          </div>
+
+          <div class="login-link">
+            Already have an account? <a routerLink="/login">Sign In</a>
+          </div>
         </div>
       </form>
     </div>

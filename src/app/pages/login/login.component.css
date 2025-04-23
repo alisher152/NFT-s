@@ -1,127 +1,253 @@
+:root {
+  --primary-color: #00cc77;
+  --primary-hover: #00e686;
+  --text-light: #ffffff;
+  --text-muted: #bbbbbb;
+  --bg-dark: rgba(0, 0, 0, 0.6);
+  --border-dark: #444;
+  --transition-speed: 0.3s;
+}
+
+/* Базовые стили контейнера */
 .login-container {
   display: flex;
   justify-content: center;
-  margin: 200px;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  margin: 0;
+  color: white;
 }
 
 .login-content {
-  flex: 1;
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 2rem;
 }
 
+/* Карточка формы */
 .login-card {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2.5rem;
-  border-radius: 15px;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
   width: 100%;
   max-width: 500px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  color: #ddd;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all var(--transition-speed) ease;
+  animation: fadeIn 0.6s ease-out;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .login-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0, 255, 153, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 32px rgba(16, 222, 133, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .login-card h2 {
   text-align: center;
-  margin-bottom: 1.5rem;
-  color: #fff;
-  font-size: 2rem;
-  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--text-light);
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.login-card h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--primary-color);
+  margin: 0.8rem auto 0;
+  border-radius: 3px;
 }
 
 /* Поля формы */
 .form-group {
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
   position: relative;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  color: #bbb;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
   font-weight: 500;
-  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  transition: all var(--transition-speed) ease;
 }
 
 .form-group input {
   width: 100%;
-  padding: 0.75rem 1rem;
-  border: 2px solid #444;
-  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--border-dark);
+  border-radius: 10px;
   font-size: 1rem;
-  transition: all 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  transition: all var(--transition-speed) ease;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-light);
+  letter-spacing: 0.5px;
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .form-group input:focus {
-  border-color: #00cc77;
-  box-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
-  outline: none;
-  background-color: rgba(255, 255, 255, 0.2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 204, 119, 0.2);
+  background-color: rgba(255, 255, 255, 0.12);
+  padding-left: 1.5rem;
 }
 
-/* Кнопки */
+/* Иконки и эффекты для полей */
+.form-group:focus-within label {
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+/* Кнопка отправки */
 .form-actions {
-  display: flex;
-  justify-content: space-between;
   margin-top: 2.5rem;
-  gap: 1rem;
-}
-
-button {
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 button[type="submit"] {
-  background-color: #00cc77;
+  width: 100%;
+  padding: 1.1rem;
+  background: green;
   color: white;
-  box-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  position: relative;
+  overflow: hidden;
 }
 
 button[type="submit"]:hover {
-  background-color: #00cc77;
-  transform: translateY(-2px);
-  border-color: #00cc77;
-  box-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
+  background: green;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 204, 119, 0.3);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
 }
 
 button[type="submit"]:disabled {
-  background-color: #777;
+  background: #555;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
-.register-link {
-  text-align: center;
-  display: block;
-  color: #00cc77;
-  text-decoration: none;
-  font-weight: 500;
-  background-color: #00cc77;
+/* Эффект волны при клике */
+button[type="submit"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
 }
 
-.register-link:hover {
-  text-decoration: underline;
-  background-color: #00cc77;
-  border-color: #00cc77;
-  box-shadow: 0 0 10px rgba(0, 255, 153, 0.5);
+button[type="submit"]:focus:not(:active)::after {
+  animation: ripple 0.6s ease-out;
+}
+
+/* Ссылка на регистрацию */
+.register-link {
+  display: block;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.register-link a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all var(--transition-speed) ease;
+  position: relative;
+}
+
+.register-link a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--primary-color);
+  transition: width var(--transition-speed) ease;
+}
+
+.register-link a:hover::after {
+  width: 100%;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(50, 50);
+    opacity: 0;
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 1rem;
+  }
+
+  .login-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .login-card h2 {
+    font-size: 1.8rem;
+  }
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
