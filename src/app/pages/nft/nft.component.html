@@ -1,49 +1,69 @@
 <div class="nft-container">
-  <h1>NFT's</h1>
+  <h1>NFT Collection</h1>
+
   <div class="search-bar">
     <input
       type="text"
       [(ngModel)]="searchText"
       (input)="searchNFTs()"
-      placeholder="Search NFTs..."
+      placeholder="Search NFTs or authors..."
     />
     <button (click)="searchNFTs()">Search</button>
   </div>
 
   <div class="nft-grid">
-    <div *ngFor="let nft of filteredNFTs" class="nft-card">
-      <h2>{{ nft.title }}</h2>
-      <p>{{ nft.subtitle }}</p>
-
-      <div class="category-line">
-        <p class="category">{{ nft.category }}</p>
-        <p class="category-type">{{ nft.category }}</p>
+    <div *ngFor="let nft of filteredNFTs" class="nft-card-wrapper">
+      <div class="nft-author-header">
+        <a (click)="goToAuthorProfile(nft.authorId)" class="author-link">
+          {{ nft.author }}
+        </a>
       </div>
 
-      <p class="price">${{ nft.price }}</p>
+      <div class="nft-card" [class.selected]="selectedNFTs.has(nft)">
+        <img [src]="nft.image" [alt]="nft.title" class="nft-image" />
 
-      <div class="actions">
-        <button (click)="voteNFT(nft)" class="vote-btn">
-          👍 {{ nft.votes }}
-        </button>
-        <button (click)="toggleCommentBox(nft)" class="comment-btn">
-          💬 Comment
-        </button>
-        <button (click)="buyNFT(nft)" class="buy-btn">Buy</button>
-        <button (click)="addToCollection(nft)" class="collect-btn">
-          ➕ Add to Collection
-        </button>
-      </div>
+        <div class="nft-content">
+          <h3 class="nft-title">{{ nft.title }}</h3>
+          <p class="nft-subtitle">{{ nft.subtitle }}</p>
 
-      <div *ngIf="nft.showComments" class="comments">
-        <p *ngFor="let comment of nft.comments">{{ comment }}</p>
-        <input
-          type="text"
-          [(ngModel)]="nft.newComment"
-          placeholder="Add a comment"
-          class="comment-input"
-        />
-        <button (click)="addComment(nft)" class="submit-btn">Submit</button>
+          <div class="category-line">
+            <span class="category">{{ nft.category }}</span>
+            <span class="category-type">{{ nft.category }}</span>
+          </div>
+
+          <p class="price">${{ nft.price }}</p>
+
+          <div class="actions">
+            <button (click)="voteNFT(nft)" class="vote-btn">
+              👍 {{ nft.votes }}
+            </button>
+            <button (click)="toggleCommentBox(nft)" class="comment-btn">
+              💬 Comment
+            </button>
+            <button (click)="buyNFT(nft)" class="buy-btn">Buy</button>
+            <button (click)="addToCollection(nft)" class="collect-btn">
+              ➕ Add to Collection
+            </button>
+          </div>
+
+          <div *ngIf="nft.showComments" class="comments">
+            <div *ngFor="let comment of nft.comments" class="comment">
+              <div class="comment-author">
+                {{ comment.author }}
+                <span class="comment-date">{{ comment.date }}</span>
+              </div>
+              <p class="comment-text">{{ comment.text }}</p>
+            </div>
+
+            <input
+              type="text"
+              [(ngModel)]="nft.newComment"
+              placeholder="Add a comment"
+              class="comment-input"
+            />
+            <button (click)="addComment(nft)" class="submit-btn">Submit</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

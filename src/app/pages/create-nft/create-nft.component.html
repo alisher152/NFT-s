@@ -1,33 +1,67 @@
 <div class="nft-create-container">
-  <h2>Create Item</h2>
-  <div class="upload-box">
-    <p>Upload File</p>
-    <input type="file" (change)="onFileSelected($event)" />
-    <p>You can upload PNG, GIF, WEBP, MP4 or MP3 files.</p>
+  <div class="nft-create-header">
+    <h2>Create Item</h2>
+    <div class="header-buttons">
+      <button class="action-btn">Share</button>
+      <button class="action-btn">Report</button>
+    </div>
   </div>
-  <div class="form-group">
-    <label>Item Name</label>
-    <input type="text" [(ngModel)]="itemName" />
+  <div class="nft-create-content">
+    <div class="left-section">
+      <div class="upload-box">
+        <p>Upload File</p>
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          accept=".png,.gif,.webp,.mp4,.mp3"
+        />
+        <p class="file-info">
+          Max size 100Mb, file format: PNG, GIF, JPG, MP4, WEBP, MP3
+        </p>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea
+          [(ngModel)]="description"
+          placeholder="e.g. This is a unique digital artwork..."
+        ></textarea>
+      </div>
+    </div>
+    <div class="right-section">
+      <div class="form-group">
+        <label>Item Name</label>
+        <input
+          type="text"
+          [(ngModel)]="itemName"
+          placeholder="e.g. Digital Masterpiece"
+        />
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select [(ngModel)]="category">
+          <option value="" disabled selected>Select one</option>
+          <option *ngFor="let cat of categories" [value]="cat">
+            {{ cat }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Item Type</label>
+        <select [(ngModel)]="itemType">
+          <option value="" disabled selected>Select one</option>
+          <option *ngFor="let type of itemTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group price-group">
+        <label>Price</label>
+        <div class="price-input">
+          <input type="text" [(ngModel)]="price" placeholder="e.g. 0.1" />
+          <span class="currency">QUBE</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <label>Category</label>
-    <select [(ngModel)]="category">
-      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label>Item Type</label>
-    <select [(ngModel)]="itemType">
-      <option *ngFor="let type of itemTypes" [value]="type">{{ type }}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label>Price</label>
-    <textarea [(ngModel)]="price"></textarea>
-  </div>
-  <div class="form-group-1">
-    <label>Description</label>
-    <textarea [(ngModel)]="description"></textarea>
-  </div>
-  <button class="btn" (click)="createItem()">Create</button>
+  <button class="create-btn" (click)="createItem()">Create</button>
 </div>

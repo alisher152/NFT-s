@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -7,405 +8,93 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class NftProfileComponent implements OnInit {
-  defaultAvatarUrl: string = 'assets/default-avatar.jpg';
-  customAvatarUrl: string | null = null;
-  isEditing = false;
-  name = 'USER';
-  about = '';
-  selectedFileName: string | null = null;
-  private usedNames: Set<string> = new Set();
+  userId!: string;
+  user: any;
+  currentUser: any;
+  userNFTs: any[] = [];
+  userCollection: any[] = [];
+  isLoading = true;
+  isAuthor = false;
 
-  // Полные словари для генерации имен
-  private firstNames = [
-    'Александр',
-    'Алексей',
-    'Анатолий',
-    'Андрей',
-    'Антон',
-    'Аркадий',
-    'Арсений',
-    'Артем',
-    'Богдан',
-    'Борис',
-    'Вадим',
-    'Валентин',
-    'Валерий',
-    'Василий',
-    'Виктор',
-    'Виталий',
-    'Владимир',
-    'Владислав',
-    'Всеволод',
-    'Вячеслав',
-    'Геннадий',
-    'Георгий',
-    'Герман',
-    'Глеб',
-    'Григорий',
-    'Даниил',
-    'Денис',
-    'Дмитрий',
-    'Евгений',
-    'Егор',
-    'Иван',
-    'Игорь',
-    'Илья',
-    'Кирилл',
-    'Константин',
-    'Лев',
-    'Леонид',
-    'Максим',
-    'Марат',
-    'Марк',
-    'Матвей',
-    'Михаил',
-    'Никита',
-    'Николай',
-    'Олег',
-    'Павел',
-    'Петр',
-    'Роман',
-    'Руслан',
-    'Семен',
-    'Сергей',
-    'Станислав',
-    'Степан',
-    'Тарас',
-    'Тимофей',
-    'Тимур',
-    'Федор',
-    'Филипп',
-    'Эдуард',
-    'Юрий',
-    'Яков',
-    'Ярослав',
-    'Алина',
-    'Алиса',
-    'Алла',
-    'Анастасия',
-    'Ангелина',
-    'Анна',
-    'Антонина',
-    'Валентина',
-    'Валерия',
-    'Варвара',
-    'Василиса',
-    'Вера',
-    'Вероника',
-    'Виктория',
-    'Галина',
-    'Дарья',
-    'Диана',
-    'Евгения',
-    'Екатерина',
-    'Елена',
-    'Елизавета',
-    'Жанна',
-    'Зоя',
-    'Инна',
-    'Ирина',
-    'Карина',
-    'Кира',
-    'Клавдия',
-    'Ксения',
-    'Лариса',
-    'Лидия',
-    'Любовь',
-    'Людмила',
-    'Маргарита',
-    'Марина',
-    'Мария',
-    'Милана',
-    'Надежда',
-    'Наталья',
-    'Нина',
-    'Оксана',
-    'Олеся',
-    'Ольга',
-    'Полина',
-    'Раиса',
-    'Регина',
-    'Светлана',
-    'София',
-  ];
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
-  private lastNames = [
-    'Иванов',
-    'Смирнов',
-    'Кузнецов',
-    'Попов',
-    'Васильев',
-    'Петров',
-    'Соколов',
-    'Михайлов',
-    'Новиков',
-    'Федоров',
-    'Морозов',
-    'Волков',
-    'Алексеев',
-    'Лебедев',
-    'Семенов',
-    'Егоров',
-    'Павлов',
-    'Козлов',
-    'Степанов',
-    'Николаев',
-    'Орлов',
-    'Андреев',
-    'Макаров',
-    'Никитин',
-    'Захаров',
-    'Зайцев',
-    'Соловьев',
-    'Борисов',
-    'Яковлев',
-    'Григорьев',
-    'Романов',
-    'Воробьев',
-    'Сергеев',
-    'Кузьмин',
-    'Фролов',
-    'Александров',
-    'Дмитриев',
-    'Королев',
-    'Гусев',
-    'Киселев',
-    'Ильин',
-    'Максимов',
-    'Поляков',
-    'Сорокин',
-    'Виноградов',
-    'Ковалев',
-    'Белов',
-    'Медведев',
-    'Антонов',
-    'Тарасов',
-    'Жуков',
-    'Баранов',
-    'Филиппов',
-    'Комаров',
-    'Давыдов',
-    'Беляев',
-    'Герасимов',
-    'Богданов',
-    'Осипов',
-    'Сидоров',
-    'Матвеев',
-    'Титов',
-    'Марков',
-    'Миронов',
-    'Крылов',
-    'Куликов',
-    'Карпов',
-    'Власов',
-    'Мельников',
-    'Денисов',
-    'Гаврилов',
-    'Тихонов',
-    'Казаков',
-    'Афанасьев',
-    'Данилов',
-    'Савельев',
-    'Тимофеев',
-    'Фомин',
-    'Чернов',
-    'Абрамов',
-    'Мартынов',
-    'Ефимов',
-    'Щербаков',
-    'Назаров',
-    'Калинин',
-    'Исаев',
-    'Чернышев',
-    'Быков',
-    'Маслов',
-    'Родионов',
-    'Коновалов',
-    'Лазарев',
-    'Воронин',
-    'Климов',
-    'Филатов',
-    'Пономарев',
-    'Голубев',
-    'Кудрявцев',
-    'Прохоров',
-    'Наумов',
-  ];
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    const storedUser = localStorage.getItem('userProfile');
 
-  private nicknames = [
-    'Ветер',
-    'Молния',
-    'Тигр',
-    'Орел',
-    'Лис',
-    'Медведь',
-    'Сокол',
-    'Волк',
-    'Рысак',
-    'Гром',
-    'Ураган',
-    'Град',
-    'Вихрь',
-    'Шторм',
-    'Цунами',
-    'Вулкан',
-    'Клинок',
-    'Щит',
-    'Меч',
-    'Лучник',
-  ];
-
-  private adjectives = [
-    'Красный',
-    'Синий',
-    'Быстрый',
-    'Умный',
-    'Смелый',
-    'Летучий',
-    'Темный',
-    'Светлый',
-    'Великий',
-    'Могучий',
-    'Стальной',
-    'Золотой',
-    'Серебряный',
-    'Бронзовый',
-    'Яростный',
-    'Бесконечный',
-    'Вечный',
-    'Неуловимый',
-    'Невидимый',
-    'Загадочный',
-    'Стремительный',
-    'Беспощадный',
-    'Неудержимый',
-    'Непобедимый',
-    'Легендарный',
-    'Мифический',
-    'Таинственный',
-    'Забытый',
-    'Древний',
-    'Бессмертный',
-  ];
-
-  private nouns = [
-    'Дракон',
-    'Феникс',
-    'Волк',
-    'Ястреб',
-    'Титан',
-    'Самурай',
-    'Маг',
-    'Воин',
-    'Странник',
-    'Мудрец',
-    'Рыцарь',
-    'Паладин',
-    'Чародей',
-    'Некромант',
-    'Алхимик',
-    'Пират',
-    'Викинг',
-    'Кочевник',
-    'Охотник',
-    'Следопыт',
-    'Пророк',
-    'Оракул',
-    'Демиург',
-    'Творец',
-    'Разрушитель',
-    'Защитник',
-    'Хранитель',
-    'Посланник',
-    'Избранный',
-    'Спаситель',
-  ];
-
-  get avatarUrl(): string {
-    return this.customAvatarUrl || this.defaultAvatarUrl;
-  }
-
-  ngOnInit() {
-    this.loadSavedData();
-  }
-
-  generateRandomName() {
-    let attempts = 0;
-    const maxAttempts = 100;
-    let newName = '';
-
-    while (attempts < maxAttempts) {
-      const randomType = Math.floor(Math.random() * 3);
-
-      switch (randomType) {
-        case 0:
-          newName = `${this.getRandomItem(
-            this.firstNames
-          )} ${this.getRandomItem(this.lastNames)}`;
-          break;
-        case 1:
-          newName = `${this.getRandomItem(
-            this.firstNames
-          )} ${this.getRandomItem(this.nicknames)}`;
-          break;
-        case 2:
-          newName = `${this.getRandomItem(
-            this.adjectives
-          )} ${this.getRandomItem(this.nouns)}`;
-          break;
-      }
-
-      if (Math.random() < 0.3) {
-        newName += ` ${Math.floor(Math.random() * 1000)}`;
-      }
-
-      if (!this.usedNames.has(newName)) {
-        this.usedNames.add(newName);
-        this.name = newName;
-        return;
-      }
-      attempts++;
+    if (storedUser) {
+      this.currentUser = JSON.parse(storedUser);
+      console.log('Текущий пользователь из localStorage:', this.currentUser);
+    } else {
+      console.log('Текущий пользователь не найден в localStorage');
     }
-    this.name = newName;
-  }
 
-  private getRandomItem(array: string[]): string {
-    return array[Math.floor(Math.random() * array.length)];
-  }
-
-  toggleEdit() {
-    this.isEditing = !this.isEditing;
-  }
-
-  saveProfile() {
-    localStorage.setItem('userName', this.name);
-    localStorage.setItem('userAbout', this.about);
-    this.isEditing = false;
-  }
-
-  removeAvatar() {
-    if (this.customAvatarUrl) {
-      URL.revokeObjectURL(this.customAvatarUrl);
+    if (id) {
+      this.userId = id;
+      this.loadUserData();
+    } else {
+      console.error('ID пользователя не найден в маршруте');
+      this.isLoading = false;
     }
-    this.customAvatarUrl = null;
-    this.selectedFileName = null;
   }
 
-  onFileSelected(event: Event) {
+  async loadUserData() {
+    try {
+      // Загружаем данные пользователя из localStorage
+      const profile = localStorage.getItem('userProfile');
+      if (profile) {
+        this.user = JSON.parse(profile);
+        // Проверяем, является ли текущий пользователь автором профиля
+        this.isAuthor = this.currentUser?.id === this.userId;
+      } else {
+        this.user = {
+          username: 'Неизвестный',
+          avatar: 'assets/default-avatar.jpg',
+          walletAddress: '0x0000...',
+          bio: '',
+          followers: 0,
+          following: 0,
+        };
+      }
+
+      // Заглушка для NFT и коллекции (заменится бэкендом)
+      this.userNFTs = [
+        { title: 'NFT 1', image: 'assets/nft1.jpg', price: 0.5 },
+        { title: 'NFT 2', image: 'assets/nft2.jpg', price: 0.8 },
+      ];
+      this.userCollection = [
+        { title: 'NFT A', image: 'assets/nftA.jpg', price: 1.2 },
+        { title: 'NFT B', image: 'assets/nftB.jpg', price: 0.9 },
+      ];
+
+      this.isLoading = false;
+    } catch (error) {
+      console.error('Ошибка загрузки данных профиля:', error);
+      this.isLoading = false;
+    }
+  }
+
+  getCollectionValue(): number {
+    return this.userCollection.reduce((sum, nft) => sum + (nft.price || 0), 0);
+  }
+
+  navigateToCreateNFT(): void {
+    this.router.navigate(['/create-nft']);
+  }
+
+  // Обработка загрузки аватара
+  onAvatarChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
-      if (this.customAvatarUrl) {
-        URL.revokeObjectURL(this.customAvatarUrl);
-      }
       const file = input.files[0];
-      this.customAvatarUrl = URL.createObjectURL(file);
-      this.selectedFileName = file.name;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.user.avatar = reader.result as string; // Обновляем аватар
+        // Обновляем данные в localStorage
+        const updatedProfile = { ...this.user, avatar: this.user.avatar };
+        localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
+      };
+      reader.readAsDataURL(file);
     }
-  }
-
-  private loadSavedData() {
-    this.name = localStorage.getItem('userName') || this.name;
-    this.about = localStorage.getItem('userAbout') || this.about;
-    this.usedNames.add(this.name);
   }
 }

@@ -1,70 +1,113 @@
 <div class="profile-container">
-  <img
-    [src]="avatarUrl"
-    (error)="customAvatarUrl = null"
-    alt="User Avatar"
-    class="profile-avatar"
-  />
+  <div *ngIf="isLoading" class="loader">Loading...</div>
 
-  <div class="profile-info">
-    <h3>{{ name }}</h3>
-    <p *ngIf="about">{{ about }}</p>
-  </div>
-
-  <div class="file-input-wrapper">
-    <input
-      type="file"
-      id="avatarInput"
-      (change)="onFileSelected($event)"
-      class="file-input"
-      accept="image/*"
-    />
-    <label for="avatarInput" class="button button-primary">
-      <span class="icon-upload">↑</span> Выберите файл
-    </label>
-    <div class="file-name" *ngIf="selectedFileName">{{ selectedFileName }}</div>
-  </div>
-
-  <div class="action-buttons-row">
-    <button class="button button-secondary" (click)="generateRandomName()">
-      Случайное имя
-    </button>
-    <button class="button button-primary" (click)="toggleEdit()">
-      {{ isEditing ? "Отмена" : "Редактировать" }}
-    </button>
-    <button class="button button-danger" (click)="removeAvatar()">
-      Удалить аватар
-    </button>
-  </div>
-
-  <div *ngIf="isEditing" class="edit-form">
-    <div class="form-group">
-      <label for="name">Имя:</label>
-      <input
-        id="name"
-        type="text"
-        [(ngModel)]="name"
-        class="form-control"
-        placeholder="Введите имя"
-        maxlength="30"
-      />
-      <div class="char-counter">{{ name.length }}/30</div>
+  <div *ngIf="!isLoading" class="profile-content">
+    <div class="profile-header">
+      <div class="avatar-container">
+        <img
+          [src]="user?.avatar || 'assets/default-avatar.jpg'"
+          class="profile-avatar"
+          alt=""
+        />
+        <!-- Наложение для выбора фото, отображается только для автора -->
+        <label *ngIf="isAuthor" for="avatar-upload" class="upload-overlay">
+          <svg
+            class="upload-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Choose Image</span>
+        </label>
+        <input
+          *ngIf="isAuthor"
+          id="avatar-upload"
+          type="file"
+          accept="image/png, image/jpeg"
+          (change)="onAvatarChange($event)"
+          style="display: none"
+        />
+      </div>
+      <div class="profile-info">
+        <h1 class="username">{{ user?.username || "Unknow" }}</h1>
+        <p class="wallet-address">
+          {{ user?.walletAddress | slice : 0 : 6 }}...{{
+            user?.walletAddress | slice : -4
+          }}
+        </p>
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-value">{{ userNFTs.length }}</span>
+            <span class="stat-label">Created</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{{ user?.followers || 0 }}</span>
+            <span class="stat-label">Followers</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{{ user?.following || 0 }}</span>
+            <span class="stat-label">Following</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="about">О себе:</label>
-      <textarea
-        id="about"
-        [(ngModel)]="about"
-        class="form-control"
-        placeholder="Расскажите о себе"
-        maxlength="200"
-      ></textarea>
-      <div class="char-counter">{{ about.length }}/200</div>
+    <div class="profile-description" *ngIf="user?.bio">
+      <h2>About</h2>
+      <p>{{ user.bio }}</p>
     </div>
 
-    <button class="button button-success" (click)="saveProfile()">
-      Сохранить
-    </button>
+    <div class="profile-section" *ngIf="isAuthor && userNFTs.length > 0">
+      <h2>Created NFT</h2>
+      <div class="nft-grid">
+        <div *ngFor="let nft of userNFTs" class="nft-card">
+          <img [src]="nft.image" [alt]="nft.title" class="nft-image" />
+          <div class="nft-info">
+            <h3>{{ nft.title }}</h3>
+            <p class="price">{{ nft.price }} ETH</p>
+            <button class="view-btn">View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <h2>Collection {{ user?.username || "this username" }}</h2>
+      <div class="collection-stats">
+        <div class="stat-card">
+          <span class="stat-value">{{ userCollection.length }}</span>
+          <span class="stat-label">Objects</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value">{{
+            getCollectionValue() | number : "1.2-2"
+          }}</span>
+          <span class="stat-label">ETH Price</span>
+        </div>
+      </div>
+      <div class="nft-grid">
+        <div *ngFor="let nft of userCollection" class="nft-card">
+          <img [src]="nft.image" [alt]="nft.title" class="nft-image" />
+          <div class="nft-info">
+            <h3>{{ nft.title }}</h3>
+            <p class="price">{{ nft.price }} ETH</p>
+            <button class="view-btn">View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isAuthor" class="create-nft-section">
+      <button class="create-nft-btn" (click)="navigateToCreateNFT()">
+        Create NFT
+      </button>
+    </div>
   </div>
 </div>

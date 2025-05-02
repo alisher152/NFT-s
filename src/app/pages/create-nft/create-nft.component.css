@@ -2,28 +2,59 @@ body {
   background: linear-gradient(to right bottom, #0a0f1e, #0f162a);
   color: white;
   font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
 }
 
 .nft-create-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.nft-create-header {
   display: flex;
-  flex-direction: column;
-  align-items: start;
-  padding: 20px;
-}
-
-.nft-create-container-item {
-  width: 80%;
-  max-width: 900px;
-  background: rgba(20, 25, 40, 0.9);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-}
-
-.nft-create-container h2 {
-  font-size: 32px;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+}
+
+.nft-create-header h2 {
+  font-size: 32px;
+  font-weight: 600;
   color: white;
+  text-transform: uppercase;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  background: green;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.action-btn:hover {
+  background: #00d19c;
+}
+
+.nft-create-content {
+  display: flex;
+  gap: 30px;
+}
+
+.left-section,
+.right-section {
+  flex: 1;
 }
 
 .upload-box {
@@ -33,92 +64,224 @@ body {
   text-align: center;
   border-radius: 10px;
   margin-bottom: 20px;
-  width: 600px;
-  height: 400px;
 }
 
 .upload-box p {
-  font-size: 44px;
+  font-size: 24px;
   color: rgba(255, 255, 255, 0.7);
-  margin: 50px;
+  margin: 0 0 20px;
+}
+
+.upload-box input[type="file"] {
+  display: block;
+  margin: 0 auto 20px;
+  color: white;
+}
+
+.upload-box .file-info {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .form-group {
-  display: flex;
-  gap: 15px;
-  flex-direction: column;
-  position: relative;
-  top: -400px;
-  left: 65%;
-  transform: translateY(-50%);
-  margin: 20px;
-  width: 400px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-  font-size: 44px;
+  display: block;
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
 }
 
 .form-group input,
-.form-group select {
-  background: rgba(255, 255, 255, 0.1);
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2);
   border: none;
-  color: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
-  font-size: 24px;
-  margin: 5px;
-  appearance: none; /* Убираем стандартный стиль */
+  color: white;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+}
+
+.form-group input::placeholder,
+.form-group select::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group select {
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='green'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M7 10l5 5 5-5z'/></svg>");
   background-repeat: no-repeat;
   background-position: right 10px center;
-  background-size: 16px;
-  padding-right: 30px; /* Чтобы текст не накладывался на стрелку */
-  color: black !important;
+  background-size: 12px;
+  padding-right: 30px;
+}
+
+.form-group select option {
+  background: #1a1f35;
+  color: white;
+}
+
+.form-group select option:checked {
+  background: #1a1f35;
+  color: white;
 }
 
 .form-group textarea {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  color: rgba(255, 255, 255, 0.1);
+  height: 120px;
+  resize: none;
 }
 
-.form-group-1 {
-  margin-top: -580px;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group-1 label {
-  color: white;
-  font-size: 44px;
-}
-
-.form-group-1 textarea,
-.form-group-1 input {
-  color: rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  height: 400px;
-  width: 600px;
-}
-
-.btn {
-  background: #39ce9a;
-  border: none;
-  padding: 10px 90px;
-  border-radius: 15px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
-  color: white;
-  top: -260px;
-  left: 75%;
+.price-group {
   position: relative;
 }
 
-.btn:hover {
+.price-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price-input input {
+  flex: 1;
+}
+
+.price-input .currency {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.create-btn {
+  background: #39ce9a;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+  color: white;
+  display: block;
+  margin-left: auto;
+}
+
+.create-btn:hover {
   background: #00d19c;
+}
+
+/* Адаптация для планшетов (768px - 1024px) */
+@media (max-width: 1024px) {
+  .nft-create-container {
+    padding: 30px 15px;
+  }
+
+  .nft-create-header h2 {
+    font-size: 28px;
+  }
+
+  .upload-box {
+    padding: 30px;
+  }
+
+  .upload-box p {
+    font-size: 20px;
+  }
+
+  .nft-create-content {
+    gap: 20px;
+  }
+}
+
+/* Адаптация для мобильных устройств (до 768px) */
+@media (max-width: 768px) {
+  .nft-create-container {
+    padding: 20px 10px;
+  }
+
+  .nft-create-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .nft-create-header h2 {
+    font-size: 24px;
+  }
+
+  .header-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .action-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .nft-create-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .upload-box {
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+
+  .upload-box p {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .form-group textarea {
+    height: 100px;
+  }
+
+  .create-btn {
+    width: 100%;
+    margin: 0;
+    padding: 12px;
+  }
+}
+
+/* Адаптация для маленьких мобильных устройств (до 480px) */
+@media (max-width: 480px) {
+  .nft-create-header h2 {
+    font-size: 20px;
+  }
+
+  .upload-box {
+    padding: 15px;
+  }
+
+  .upload-box p {
+    font-size: 16px;
+  }
+
+  .price-input {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .price-input input {
+    width: 100%;
+  }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NftCollectionService } from '../../nft-collection.service';
 import { UserService } from '../../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nft',
@@ -15,12 +16,13 @@ export class NFTComponent {
 
   constructor(
     private nftCollectionService: NftCollectionService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {
     this.filteredNFTs = [...this.nfts];
   }
 
-  toggleNFTSelection(nft: any) {
+  toggleNFTSelection(nft: any): void {
     if (this.selectedNFTs.has(nft)) {
       this.selectedNFTs.delete(nft);
     } else {
@@ -28,15 +30,15 @@ export class NFTComponent {
     }
   }
 
-  addSelectedToCollection() {
+  addSelectedToCollection(): void {
     const currentUser = this.userService.getUser();
     if (!currentUser) {
-      alert('Пожалуйста, войдите в систему!');
+      alert('Please log in!');
       return;
     }
 
     if (this.selectedNFTs.size === 0) {
-      alert('Выберите хотя бы один NFT!');
+      alert('Select at least one NFT!');
       return;
     }
 
@@ -44,31 +46,40 @@ export class NFTComponent {
       this.nftCollectionService.addToCollection(currentUser.id, nft);
     });
 
-    alert(`${this.selectedNFTs.size} NFT добавлены в коллекцию!`);
+    alert(`${this.selectedNFTs.size} NFTs added to collection!`);
     this.selectedNFTs.clear();
   }
 
-  searchNFTs() {
-    this.filteredNFTs = this.nfts.filter((nft) =>
-      nft.title.toLowerCase().includes(this.searchText.toLowerCase())
+  searchNFTs(): void {
+    this.filteredNFTs = this.nfts.filter(
+      (nft) =>
+        nft.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        nft.author.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
 
-  voteNFT(nft: any) {
+  voteNFT(nft: any): void {
     nft.votes++;
   }
 
-  buyNFT(nft: any) {
-    alert(`Вы купили "${nft.title}" за $${nft.price}!`);
+  buyNFT(nft: any): void {
+    alert(`You bought "${nft.title}" for $${nft.price}!`);
   }
 
-  toggleCommentBox(nft: any) {
+  toggleCommentBox(nft: any): void {
     nft.showComments = !nft.showComments;
   }
 
-  addComment(nft: any) {
+  addComment(nft: any): void {
+    const currentUser = this.userService.getUser();
+    const authorName = currentUser ? currentUser.name : 'Anonymous';
+
     if (nft.newComment.trim() !== '') {
-      nft.comments.push(nft.newComment);
+      nft.comments.push({
+        text: nft.newComment,
+        author: authorName,
+        date: new Date().toLocaleString(),
+      });
       nft.newComment = '';
     }
   }
@@ -76,17 +87,16 @@ export class NFTComponent {
   addToCollection(nft: any): void {
     const currentUser = this.userService.getUser();
     if (!currentUser) {
-      alert('Пожалуйста, войдите в систему!');
+      alert('Please log in!');
       return;
     }
 
     this.nftCollectionService.addToCollection(currentUser.id, nft);
-    alert(`NFT "${nft.title}" добавлен в вашу коллекцию!`);
+    alert(`NFT "${nft.title}" added to your collection!`);
   }
 
-  addNft(newNft: any) {
-    this.nfts.push(newNft);
-    this.searchNFTs();
+  goToAuthorProfile(authorId: string): void {
+    this.router.navigate(['/profile', authorId]);
   }
 
   nfts = [
@@ -94,97 +104,105 @@ export class NFTComponent {
       id: 1,
       title: 'Collection of nightmares',
       subtitle: 'Nightmare (pt.15) 10☓10',
+      author: 'CryptoArtist123',
       category: 'Games',
       price: 49.99,
       votes: 0,
       comments: [],
       showComments: false,
       newComment: '',
-      image: 'assets/nft1.jpg',
+      image: 'assets/Collection.svg',
     },
     {
       id: 2,
       title: 'Apes',
       subtitle: 'King Bored Ape #2414',
+      author: 'ApeCreator',
       category: 'Collectibles',
       price: 49.99,
       votes: 0,
       comments: [],
       showComments: false,
       newComment: '',
-      image: 'assets/nft2.jpg',
+      image: 'assets/Apes.svg',
     },
     {
       id: 3,
       title: 'GALLERY_13',
       subtitle: 'HorseNFT #1332',
+      author: 'DigitalArtMaster',
       category: 'Games',
       price: 49.99,
       votes: 0,
       comments: [],
       showComments: false,
       newComment: '',
-      image: 'assets/nft3.jpg',
+      image: 'assets/GALLERY.svg',
     },
     {
       id: 4,
       title: 'USSR',
       subtitle: 'USSR 2.Edition 07',
+      author: 'RetroCollector',
       category: 'Collectibles',
       price: 49.99,
       votes: 0,
       comments: [],
       showComments: false,
       newComment: '',
-      image: 'assets/nft4.jpg',
+      image: 'assets/USSR.svg',
     },
     {
       id: 5,
-      title: 'Collection of nightmares',
-      subtitle: 'Nightmare (pt.15) 10☓10',
-      category: 'Games',
+      title: 'USSR',
+      subtitle: 'USSR 2.Edition 07',
+      author: 'RetroCollector',
+      category: 'Collectibles',
       price: 49.99,
       votes: 0,
       comments: [],
       showComments: false,
       newComment: '',
-      image: 'assets/nft1.jpg',
+      image: 'assets/USSRsvg',
     },
     {
       id: 6,
       title: 'Apes',
       subtitle: 'King Bored Ape #2414',
+      author: 'ApeCreator',
       category: 'Collectibles',
       price: 49.99,
       votes: 0,
       comments: [],
       showComments: false,
       newComment: '',
-      image: 'assets/nft2.jpg',
+      image: 'assets/Apes.svg',
     },
     {
       id: 7,
       title: 'GALLERY_13',
       subtitle: 'HorseNFT #1332',
+      author: 'DigitalArtMaster',
       category: 'Games',
       price: 49.99,
       votes: 0,
       comments: [],
       showComments: false,
       newComment: '',
-      image: 'assets/nft3.jpg',
+      image: 'assets/GALLERY.svg',
     },
     {
-      id: 8,
-      title: 'USSR',
-      subtitle: 'USSR 2.Edition 07',
-      category: 'Collectibles',
+      id: 1,
+      title: 'Collection of nightmares',
+      subtitle: 'Nightmare (pt.15) 10☓10',
+      author: 'CryptoArtist123',
+      category: 'Games',
       price: 49.99,
       votes: 0,
       comments: [],
       showComments: false,
       newComment: '',
-      image: 'assets/nft4.jpg',
+      image: 'assets/Collection.svg',
     },
   ];
 }

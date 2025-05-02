@@ -5,7 +5,9 @@ import {
   RouterStateSnapshot,
   Router,
 } from '@angular/router';
-import { AuthService } from './auth service'; // Путь к сервису
+import { Observable, of } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { AuthService } from './auth service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,11 +18,19 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
-    if (this.authService.isLoggedIn()) {
+  ): Observable<boolean> | boolean {
+    const isAuthenticated = this.authService.isLoggedIn();
+
+    if (isAuthenticated) {
+      console.log('AuthGuard: User is authenticated, access granted');
       return true;
     } else {
-      this.router.navigate(['/login']); // Если не авторизован, редирект на страницу логина
+      console.warn(
+        'AuthGuard: User is not authenticated, redirecting to /login'
+      );
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: state.url },
+      });
       return false;
     }
   }
