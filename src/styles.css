@@ -1,6 +1,7 @@
 body {
   background-color: black;
-  background-image: url('/src/assets/Ellipse 34.svg'), url('/src/assets/Ellipse 35.svg'), url('/src/assets/Ellipse 36.svg')
+  background-image: url("/src/assets/Ellipse 34.svg"),
+    url("/src/assets/Ellipse 35.svg"), url("/src/assets/Ellipse 36.svg");
   background-position: 15% 0%, 105% 50%, 15% 400%;
   background-size: 40vw, 50vw, 45vw;
   background-repeat: no-repeat;
