@@ -70,7 +70,11 @@ export class NFTComponent {
     nft.showComments = !nft.showComments;
   }
 
-  addComment(nft: any): void {
+  addComment(nft: any, event?: Event): void {
+    // Проверяем, если событие было KeyboardEvent и это не Enter - выходим
+    if (event && event instanceof KeyboardEvent && event.key !== 'Enter')
+      return;
+
     const currentUser = this.userService.getUser();
     const authorName = currentUser ? currentUser.name : 'Anonymous';
 

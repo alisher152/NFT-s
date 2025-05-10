@@ -32,7 +32,6 @@ export class MyNftsComponent implements OnInit {
     }
   }
 
-  // Новый метод для переключения выбора NFT
   toggleNFTSelection(nft: any) {
     if (this.selectedNFTs.has(nft)) {
       this.selectedNFTs.delete(nft);
@@ -41,7 +40,6 @@ export class MyNftsComponent implements OnInit {
     }
   }
 
-  // Новый метод для удаления выбранных NFT
   removeSelectedFromCollection() {
     if (!this.currentUser || this.selectedNFTs.size === 0) return;
 
@@ -91,13 +89,16 @@ export class MyNftsComponent implements OnInit {
     alert(`Вы купили "${nft.title}" за $${nft.price}!`);
   }
 
-  addComment(nft: any) {
+  addComment(nft: any, event?: Event) {
+    if (event && event instanceof KeyboardEvent && event.key !== 'Enter')
+      return;
+
     if (nft.newComment && nft.newComment.trim()) {
       if (!nft.comments) {
         nft.comments = [];
       }
       nft.comments.push({
-        username: this.currentUser?.name || 'Аноним',
+        username: this.currentUser?.name || 'Anonymous',
         text: nft.newComment.trim(),
         avatar: 'assets/default-avatar.jpg',
       });

@@ -60,6 +60,7 @@
               [(ngModel)]="nft.newComment"
               placeholder="Add a comment"
               class="comment-input"
+              (keyup.enter)="addComment(nft, $event)"
             />
             <button (click)="addComment(nft)" class="submit-btn">Submit</button>
           </div>

@@ -1,8 +1,3 @@
-<!-- NFT Details Section -->
-<div *ngIf="showDetails && selectedNft" class="nft-container">
-  <!-- ... (остальной код остается без изменений) ... -->
-</div>
-
 <!-- Saved NFTs Section -->
 <div class="user-collection">
   <h2>Your Collection</h2>
@@ -38,7 +33,11 @@
             >: {{ comment.text }}
           </li>
         </ul>
-        <input [(ngModel)]="nft.newComment" placeholder="Add a comment" />
+        <input
+          [(ngModel)]="nft.newComment"
+          placeholder="Add a comment"
+          (keyup.enter)="addComment(nft, $event)"
+        />
         <button (click)="addComment(nft)">Post</button>
       </div>
     </div>
